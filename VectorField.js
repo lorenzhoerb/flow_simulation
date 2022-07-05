@@ -46,7 +46,7 @@ export default class VectorField {
                 if (this.field[x][y] == null) {
                     this.field[x][y] = new Vector(1, 0);
                 } else {
-                    this.field[x][y].setAngle(Math.sin(x * 0.1) * Math.sin(y * 0.1 + y * 0.01) * 2 + this.angle * deltaTime);
+                    this.field[x][y].setAngle(Math.cos(x * 0.1) * Math.sin(y * 0.1 + y * 0.01) * 2 + this.angle * deltaTime);
                 }
             }
         }
@@ -59,11 +59,12 @@ export default class VectorField {
     }
 
     draw() {
+
         if (this.field == null) {
             return;
         }
 
-        this.ctx.strokeStyle = 'rgba(0,0,0,0.4)';
+        this.ctx.strokeStyle = 'rgba(255,255,255,0.4)';
         for (let x = 0; x < this.field.length; x++) {
             for (let y = 0; y < this.field[0].length; y++) {
                 if (this.showVec) {

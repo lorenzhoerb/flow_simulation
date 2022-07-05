@@ -27,13 +27,14 @@ function init() {
 
     vectorField = new VectorField(window.innerWidth, window.innerHeight, 25, ctx);
     vectorField.showVec = false;
+    // vectorField.radius = 40;
     // vectorField.scale = 15;
 
     for (let i = 0; i < PART_AMOUNT; i++) {
         particles[i] = new Particle(Math.random() * window.innerWidth, Math.random() * window.innerHeight, ctx);
         particles[i].maxSpeen = 300;
-        particles[i].color = 'rgba(255,255,255,0.1)';
-        particles[i].radius = '0.4';
+        particles[i].color = 'rgba(255,255,255,0.2)';
+        particles[i].radius = '0.2';
         // particles[i] = new Particle(0, 0, ctx);
         // particles[i].addForce(new Vector(, 0));
     }
@@ -58,7 +59,7 @@ function update(deltaTime) {
         }
 
         let force = vectorField.getVectorAtPos(particles[i].pos);
-        particles[i].color = 'hsl(' + cc % 360 + ',100%,50%)';
+        // particles[i].color = 'hsl(' + cc % 360 + ',100%,50%)';
         particles[i].addForce(force);
         particles[i].update(deltaTime);
     }
