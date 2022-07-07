@@ -12,7 +12,7 @@ let cc = 0;
 
 const clearCanvas = false;
 
-const PART_AMOUNT = 1000;
+const PART_AMOUNT = 2000;
 let particles = [];
 
 window.onload = init;
@@ -27,16 +27,12 @@ function init() {
 
     vectorField = new VectorField(window.innerWidth, window.innerHeight, 25, ctx);
     vectorField.showVec = false;
-    // vectorField.radius = 40;
-    // vectorField.scale = 15;
 
     for (let i = 0; i < PART_AMOUNT; i++) {
         particles[i] = new Particle(Math.random() * window.innerWidth, Math.random() * window.innerHeight, ctx);
         particles[i].maxSpeen = 300;
         particles[i].color = 'rgba(255,255,255,0.2)';
-        particles[i].radius = '0.2';
-        // particles[i] = new Particle(0, 0, ctx);
-        // particles[i].addForce(new Vector(, 0));
+        particles[i].radius = 0.1;
     }
 
     resizeCanvas();
@@ -58,26 +54,29 @@ function update(deltaTime) {
             continue;
         }
 
+        // particles[i].color = 'hsl(' + cc % 360 + ',100%,50%)'; // colors particles as rainbow
+
         let force = vectorField.getVectorAtPos(particles[i].pos);
-        // particles[i].color = 'hsl(' + cc % 360 + ',100%,50%)';
         particles[i].addForce(force);
         particles[i].update(deltaTime);
     }
 }
 
 function draw() {
-    //clears screen
-    if (clearCanvas) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = 'black';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-    }
+
+    if (clearCanvas)
+        clearFrame();
 
     vectorField.draw();
     particles.forEach(p => {
         p.draw();
     });
+}
 
+function clearFrame() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 export function drawLine(x, y, angle, radius) {
@@ -101,9 +100,7 @@ function loop(timeStamp) {
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-
     vectorField.setSize(window.innerWidth, window.innerHeight);
-
 }
 
 function getMousePos(canvas, evt) {

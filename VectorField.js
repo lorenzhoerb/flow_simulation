@@ -29,14 +29,12 @@ export default class VectorField {
 
         this.field = Array(sizeX);
 
-        for (let i = 0; i < sizeX; i++) {
-            this.field[i] = Array(sizeY)
-        }
-
-        for (let x = 0; x < this.field.length; x++)
-            for (let y = 0; y < this.field[0].length; y++)
+        for (let x = 0; x < sizeX; x++) {
+            this.field[x] = Array(sizeY)
+            for (let y = 0; y < this.field[0].length; y++) {
                 this.field[x][y] = new Vector(1, 0);
-
+            }
+        }
     }
 
     update(deltaTime) {
@@ -46,20 +44,20 @@ export default class VectorField {
                 if (this.field[x][y] == null) {
                     this.field[x][y] = new Vector(1, 0);
                 } else {
-                    this.field[x][y].setAngle(Math.cos(x * 0.1) * Math.sin(y * 0.1 + y * 0.01) * 2 + this.angle * deltaTime);
+                    // Vector field formula
+                    this.field[x][y].setAngle(Math.sin(x * 0.1) * Math.sin(y * 0.1 + y * 0.01) * 2 + this.angle * deltaTime);
                 }
             }
         }
     }
 
     getVectorAtPos(pos) {
-        let x = Math.round(pos.x / this.scale);
-        let y = Math.round(pos.y / this.scale);
+        let x = Math.floor(pos.x / this.scale);
+        let y = Math.floor(pos.y / this.scale);
         return this.field[x][y];
     }
 
     draw() {
-
         if (this.field == null) {
             return;
         }
