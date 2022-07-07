@@ -62,12 +62,14 @@ export default class VectorField {
             return;
         }
 
+        if (!this.showVec) {
+            return;
+        }
+
         this.ctx.strokeStyle = 'rgba(255,255,255,0.4)';
         for (let x = 0; x < this.field.length; x++) {
             for (let y = 0; y < this.field[0].length; y++) {
-                if (this.showVec) {
-                    drawLine(x * this.scale, y * this.scale, this.field[x][y].angle(), this.radius);
-                }
+                drawLine(x * this.scale, y * this.scale, this.field[x][y].angle(), this.radius);
             }
         }
     }
